@@ -86,15 +86,16 @@ Create the foundational UI components and design tokens:
 
 ---
 
-### [ ] Step: Landing Page - Hero & How It Works
+### [x] Step: Landing Page - Hero & How It Works
+<!-- chat-id: 6b179352-e40d-4ad9-ab55-c425709817c6 -->
 
 Build the top sections of the landing page:
 
-- [ ] Create Hero section with headline, subheadline, and CTA button
-- [ ] Implement "How it Works" 3-step section with icons
-- [ ] Add smooth scroll navigation
-- [ ] Implement responsive layout (mobile-first)
-- [ ] Add entrance animations with Framer Motion
+- [x] Create Hero section with headline, subheadline, and CTA button
+- [x] Implement "How it Works" 3-step section with icons
+- [x] Add smooth scroll navigation
+- [x] Implement responsive layout (mobile-first)
+- [x] Add entrance animations with Framer Motion
 
 **Verification**: Page loads under 2s, responsive at 375px/768px/1024px
 
