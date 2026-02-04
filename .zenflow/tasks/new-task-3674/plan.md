@@ -18,8 +18,7 @@ Do not make assumptions on important decisions — get clarification first.
 
 ## Workflow Steps
 
-### [ ] Step: Technical Specification
-<!-- chat-id: d3ac2ce7-fd84-4a9b-8df8-51f9cc3e48de -->
+### [x] Step: Technical Specification
 
 Assess the task's difficulty, as underestimating it leads to poor outcomes.
 - easy: Straightforward implementation, trivial bug fix or feature
@@ -53,16 +52,237 @@ Save to `{@artifacts_path}/plan.md`. If the feature is trivial and doesn't warra
 
 ---
 
-### [ ] Step: Implementation
+### [ ] Step: Project Setup & Configuration
 
-Implement the task according to the technical specification and general engineering best practices.
+Initialize the Next.js project with all required dependencies and configuration:
 
-1. Break the task into steps where possible.
-2. Implement the required changes in the codebase
-3. If relevant, write unit tests alongside each change.
-4. Run relevant tests and linters in the end of each step.
-5. Perform basic manual verification if applicable.
-6. After completion, write a report to `{@artifacts_path}/report.md` describing:
-   - What was implemented
-   - How the solution was tested
-   - The biggest issues or challenges encountered
+- [ ] Create Next.js 14 project with TypeScript and App Router
+- [ ] Configure for static export (Cloudflare Pages compatible)
+- [ ] Install and configure Tailwind CSS with dark mode
+- [ ] Setup shadcn/ui with required components
+- [ ] Install Zustand, React Hook Form, Zod, Framer Motion
+- [ ] Configure ESLint and Prettier
+- [ ] Create `.env.local.example` with required variables
+- [ ] Setup project folder structure as per spec
+
+**Verification**: `npm run build` succeeds, `npm run lint` passes
+
+---
+
+### [ ] Step: Design System & UI Components
+
+Create the foundational UI components and design tokens:
+
+- [ ] Configure Tailwind with custom colors (Electric Blue accent, dark mode palette)
+- [ ] Setup Inter font with Next.js font optimization
+- [ ] Install shadcn/ui components: Button, Card, Input, Textarea, Select, Checkbox, Progress, Badge
+- [ ] Create layout components: Header, Footer, Container
+- [ ] Create shared components: Logo, ThemeToggle, LoadingSpinner
+- [ ] Add Framer Motion animation variants for micro-interactions
+
+**Verification**: All components render correctly, dark mode toggles properly
+
+---
+
+### [ ] Step: Landing Page - Hero & How It Works
+
+Build the top sections of the landing page:
+
+- [ ] Create Hero section with headline, subheadline, and CTA button
+- [ ] Implement "How it Works" 3-step section with icons
+- [ ] Add smooth scroll navigation
+- [ ] Implement responsive layout (mobile-first)
+- [ ] Add entrance animations with Framer Motion
+
+**Verification**: Page loads under 2s, responsive at 375px/768px/1024px
+
+---
+
+### [ ] Step: Landing Page - Pricing & Rules
+
+Build the pricing and rules sections:
+
+- [ ] Create PricingTable component with 2 packages (Single €49, Pack of 5 €199)
+- [ ] Highlight express delivery (+€30-50) and source files options
+- [ ] Create Rules section with clear policy text
+- [ ] Style for visual hierarchy and readability
+- [ ] Add "Order Now" CTA buttons linking to /order
+
+**Verification**: Prices display correctly, CTAs navigate to order page
+
+---
+
+### [ ] Step: Landing Page - Portfolio & Footer
+
+Complete the landing page:
+
+- [ ] Create PortfolioGrid component with card layout
+- [ ] Add placeholder portfolio images (6-8 examples)
+- [ ] Implement lazy loading for portfolio images
+- [ ] Create CTA section before footer
+- [ ] Build Footer with brand info, links, and copyright
+- [ ] Add "Infinity Creative Ltd" branding
+
+**Verification**: Full landing page complete, all sections visible, smooth scrolling
+
+---
+
+### [ ] Step: Order Form - Multi-step Container & Step 1
+
+Create the order form foundation and first step:
+
+- [ ] Create FormWrapper with multi-step state management (Zustand)
+- [ ] Build StepIndicator progress bar component
+- [ ] Implement Step 1: Project Type selection (Logo, Banner, Social, Print, Other)
+- [ ] Create icon-based selection cards
+- [ ] Add form validation with Zod schema
+- [ ] Implement next/back navigation with animations
+
+**Verification**: Step 1 validates, progress bar updates, data persists in store
+
+---
+
+### [ ] Step: Order Form - Steps 2 & 3 (Content & References)
+
+Build the content and references steps:
+
+- [ ] Step 2: Content Details
+  - [ ] Text content textarea (required)
+  - [ ] Dimensions/format input with presets (1080x1080, etc.)
+- [ ] Step 3: Visual References
+  - [ ] Reference links input (Pinterest, Behance URLs)
+  - [ ] File upload with drag & drop (FileUpload component)
+  - [ ] File type validation (images, PDF, max 10MB)
+  - [ ] Upload preview with remove option
+
+**Verification**: Form validation works, files upload to local state
+
+---
+
+### [ ] Step: Order Form - Steps 4 & 5 (Options & Summary)
+
+Complete the order form:
+
+- [ ] Step 4: Additional Options
+  - [ ] Express delivery checkbox (+€30)
+  - [ ] Source files checkbox (+€20)
+  - [ ] Email input for order delivery
+- [ ] Step 5: Order Summary
+  - [ ] Display all selected options
+  - [ ] Calculate and show total price
+  - [ ] Show terms acceptance checkbox
+  - [ ] "Proceed to Payment" button
+- [ ] Implement price calculation logic in Zustand store
+
+**Verification**: Total calculates correctly, summary shows all data
+
+---
+
+### [ ] Step: Supabase Integration
+
+Setup Supabase backend:
+
+- [ ] Create Supabase project and configure
+- [ ] Create database migration with orders table schema
+- [ ] Setup Row Level Security policies
+- [ ] Create Supabase client utilities (browser & server)
+- [ ] Generate TypeScript types from database schema
+- [ ] Create storage bucket for file uploads
+- [ ] Implement file upload to Supabase Storage
+
+**Verification**: Can create order in database, files upload to storage
+
+---
+
+### [ ] Step: Stripe Checkout Integration
+
+Implement payment flow:
+
+- [ ] Setup Stripe account and get API keys
+- [ ] Create checkout session creation logic
+- [ ] Implement "Proceed to Payment" → Stripe redirect
+- [ ] Create success page with order confirmation
+- [ ] Handle checkout cancellation (return to form)
+- [ ] Display order ID and expected delivery time
+
+**Verification**: Test payment flow with Stripe test mode
+
+---
+
+### [ ] Step: Webhook & Email Notifications
+
+Setup post-payment automation:
+
+- [ ] Create Supabase Edge Function for Stripe webhook
+- [ ] Verify webhook signature
+- [ ] Update order status to 'paid' on successful payment
+- [ ] Calculate and set delivery deadline
+- [ ] Setup Resend account and API
+- [ ] Create order confirmation email template
+- [ ] Send confirmation email on successful payment
+
+**Verification**: Webhook updates order, email sends correctly
+
+---
+
+### [ ] Step: Client Dashboard
+
+Build the order tracking dashboard:
+
+- [ ] Create dashboard page layout
+- [ ] Implement order lookup by email or order ID
+- [ ] Create OrderCard component with status display
+- [ ] Build CountdownTimer component for delivery deadline
+- [ ] Create StatusBadge component (pending, in_progress, completed, delivered)
+- [ ] Show delivery files download when available
+- [ ] Mobile-responsive design
+
+**Verification**: Dashboard shows order status, countdown works correctly
+
+---
+
+### [ ] Step: Final Polish & Optimization
+
+Complete the application:
+
+- [ ] Optimize images (WebP format, proper sizing)
+- [ ] Add meta tags and Open Graph for SEO
+- [ ] Implement loading states and error boundaries
+- [ ] Add 404 page
+- [ ] Test all user flows end-to-end
+- [ ] Performance audit (Lighthouse score > 90)
+- [ ] Cross-browser testing (Chrome, Firefox, Safari)
+- [ ] Final responsive design review
+
+**Verification**: Build succeeds, Lighthouse performance > 90, all flows work
+
+---
+
+### [ ] Step: Cloudflare Pages Deployment
+
+Deploy the application:
+
+- [ ] Configure `next.config.js` for static export
+- [ ] Setup Cloudflare Pages project
+- [ ] Configure environment variables in Cloudflare
+- [ ] Setup custom domain (if available)
+- [ ] Configure Supabase Edge Functions URLs
+- [ ] Update Stripe webhook URL to production
+- [ ] Test production deployment
+- [ ] Write deployment documentation
+
+**Verification**: Site accessible on Cloudflare URL, all integrations work
+
+---
+
+### [ ] Step: Documentation & Handoff
+
+Complete project documentation:
+
+- [ ] Write README.md with setup instructions
+- [ ] Document environment variables
+- [ ] Create UI Kit documentation (colors, fonts, components)
+- [ ] Document admin workflow for order management
+- [ ] Write report.md with implementation summary
+
+**Verification**: Documentation complete, project can be set up from README
