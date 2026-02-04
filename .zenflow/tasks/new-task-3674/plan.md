@@ -102,6 +102,7 @@ Build the top sections of the landing page:
 ---
 
 ### [ ] Step: Landing Page - Pricing & Rules
+<!-- chat-id: d1f5235d-7133-4708-82f1-19f27f6fda16 -->
 
 Build the pricing and rules sections:
 
@@ -115,22 +116,24 @@ Build the pricing and rules sections:
 
 ---
 
-### [ ] Step: Landing Page - Portfolio & Footer
+### [x] Step: Landing Page - Portfolio & Footer
+<!-- chat-id: d8af490c-2eb2-48b6-860a-d1128654ccd4 -->
 
 Complete the landing page:
 
-- [ ] Create PortfolioGrid component with card layout
-- [ ] Add placeholder portfolio images (6-8 examples)
-- [ ] Implement lazy loading for portfolio images
-- [ ] Create CTA section before footer
-- [ ] Build Footer with brand info, links, and copyright
-- [ ] Add "Infinity Creative Ltd" branding
+- [x] Create PortfolioGrid component with card layout
+- [x] Add placeholder portfolio images (6-8 examples)
+- [x] Implement lazy loading for portfolio images
+- [x] Create CTA section before footer
+- [x] Build Footer with brand info, links, and copyright
+- [x] Add "Infinity Creative Ltd" branding
 
 **Verification**: Full landing page complete, all sections visible, smooth scrolling
 
 ---
 
 ### [ ] Step: Order Form - Multi-step Container & Step 1
+<!-- chat-id: b0cf6aa3-8e5d-4430-9bf8-54ac798e2840 -->
 
 Create the order form foundation and first step:
 
@@ -146,6 +149,7 @@ Create the order form foundation and first step:
 ---
 
 ### [ ] Step: Order Form - Steps 2 & 3 (Content & References)
+<!-- chat-id: 9e0c6038-528b-4078-8d23-a2db76d8b189 -->
 
 Build the content and references steps:
 

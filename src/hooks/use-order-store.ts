@@ -6,6 +6,7 @@ import { PRICING } from "@/lib/constants";
 interface OrderStore {
   // Form data
   currentStep: number;
+  previousStep: number;
   formData: OrderFormData;
 
   // Actions
@@ -17,6 +18,7 @@ interface OrderStore {
 
   // Computed
   getTotalPrice: () => number;
+  getDirection: () => "forward" | "backward";
 }
 
 const initialFormData: OrderFormData = {
@@ -32,19 +34,26 @@ const initialFormData: OrderFormData = {
 
 export const useOrderStore = create<OrderStore>()(
   persist(
-    (set, get) => ({
+    (set, get): OrderStore => ({
       currentStep: 1,
+      previousStep: 1,
       formData: initialFormData,
 
-      setStep: (step) => set({ currentStep: step }),
+      setStep: (step) =>
+        set((state) => ({
+          previousStep: state.currentStep,
+          currentStep: step,
+        })),
 
       nextStep: () =>
         set((state) => ({
+          previousStep: state.currentStep,
           currentStep: Math.min(state.currentStep + 1, 5),
         })),
 
       prevStep: () =>
         set((state) => ({
+          previousStep: state.currentStep,
           currentStep: Math.max(state.currentStep - 1, 1),
         })),
 
@@ -56,6 +65,7 @@ export const useOrderStore = create<OrderStore>()(
       resetForm: () =>
         set({
           currentStep: 1,
+          previousStep: 1,
           formData: initialFormData,
         }),
 
@@ -72,6 +82,11 @@ export const useOrderStore = create<OrderStore>()(
         }
 
         return total;
+      },
+
+      getDirection: () => {
+        const { currentStep, previousStep } = get();
+        return currentStep >= previousStep ? "forward" : "backward";
       },
     }),
     {

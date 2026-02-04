@@ -1,6 +1,13 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Hero, HowItWorks } from "@/components/landing";
+import {
+  Hero,
+  HowItWorks,
+  PricingTable,
+  Rules,
+  PortfolioGrid,
+  CTASection,
+} from "@/components/landing";
 
 export default function Home() {
   return (
@@ -9,12 +16,10 @@ export default function Home() {
       <main className="min-h-screen">
         <Hero />
         <HowItWorks />
-        {/* Additional sections will be added in subsequent steps:
-            - Pricing Table
-            - Rules
-            - Portfolio Grid
-            - CTA Section
-        */}
+        <PricingTable />
+        <Rules />
+        <PortfolioGrid />
+        <CTASection />
       </main>
       <Footer />
     </>
