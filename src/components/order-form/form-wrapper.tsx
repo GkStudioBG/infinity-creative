@@ -7,6 +7,8 @@ import { StepIndicator } from "./step-indicator";
 import { StepProjectType } from "./step-project-type";
 import { StepContent } from "./step-content";
 import { StepReferences } from "./step-references";
+import { StepOptions } from "./step-options";
+import { StepSummary } from "./step-summary";
 import { Container } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { slideLeft, slideRight } from "@/lib/animations";

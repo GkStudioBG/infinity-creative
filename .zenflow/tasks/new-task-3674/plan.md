@@ -148,19 +148,19 @@ Create the order form foundation and first step:
 
 ---
 
-### [ ] Step: Order Form - Steps 2 & 3 (Content & References)
+### [x] Step: Order Form - Steps 2 & 3 (Content & References)
 <!-- chat-id: 9e0c6038-528b-4078-8d23-a2db76d8b189 -->
 
 Build the content and references steps:
 
-- [ ] Step 2: Content Details
-  - [ ] Text content textarea (required)
-  - [ ] Dimensions/format input with presets (1080x1080, etc.)
-- [ ] Step 3: Visual References
-  - [ ] Reference links input (Pinterest, Behance URLs)
-  - [ ] File upload with drag & drop (FileUpload component)
-  - [ ] File type validation (images, PDF, max 10MB)
-  - [ ] Upload preview with remove option
+- [x] Step 2: Content Details
+  - [x] Text content textarea (required)
+  - [x] Dimensions/format input with presets (1080x1080, etc.)
+- [x] Step 3: Visual References
+  - [x] Reference links input (Pinterest, Behance URLs)
+  - [x] File upload with drag & drop (FileUpload component)
+  - [x] File type validation (images, PDF, max 10MB)
+  - [x] Upload preview with remove option
 
 **Verification**: Form validation works, files upload to local state
 
