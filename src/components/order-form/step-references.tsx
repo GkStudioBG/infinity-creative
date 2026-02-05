@@ -1,25 +1,16 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link2, Plus, X, Upload } from "lucide-react";
+import { Link2, Plus, X, Upload, ArrowRight, ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useOrderStore } from "@/hooks/use-order-store";
-import { step3Schema, type Step3Data } from "@/schemas/order.schema";
-import { slideLeft } from "@/lib/animations";
 import { FileUpload } from "./file-upload";
 
-interface StepReferencesProps {
-  onNext: () => void;
-  onBack: () => void;
-}
-
-export function StepReferences({ onNext, onBack }: StepReferencesProps) {
-  const { formData, updateFormData } = useOrderStore();
+export function StepReferences() {
+  const { formData, updateFormData, nextStep, prevStep } = useOrderStore();
   const [referenceLinks, setReferenceLinks] = useState<string[]>(
     formData.referenceLinks || []
   );
@@ -28,18 +19,6 @@ export function StepReferences({ onNext, onBack }: StepReferencesProps) {
   );
   const [newLink, setNewLink] = useState("");
   const [linkError, setLinkError] = useState<string | null>(null);
-
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Step3Data>({
-    resolver: zodResolver(step3Schema),
-    defaultValues: {
-      referenceLinks: formData.referenceLinks,
-      uploadedFiles: formData.uploadedFiles,
-    },
-    mode: "onChange",
-  });
 
   const validateUrl = (url: string): boolean => {
     try {
@@ -98,12 +77,13 @@ export function StepReferences({ onNext, onBack }: StepReferencesProps) {
     }
   };
 
-  const onSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     updateFormData({
       referenceLinks,
       uploadedFiles,
     });
-    onNext();
+    nextStep();
   };
 
   // Derive domain from URL for display
@@ -117,28 +97,21 @@ export function StepReferences({ onNext, onBack }: StepReferencesProps) {
   };
 
   return (
-    <motion.div
-      variants={slideLeft}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      className="space-y-6"
-    >
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold text-foreground">
-          Visual References
-        </h2>
-        <p className="text-muted-foreground">
+    <form onSubmit={handleSubmit}>
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold">Visual References</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Share inspiration and brand assets to help us understand your vision.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <div className="space-y-8">
         {/* Reference Links Section */}
         <div className="space-y-4">
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Link2 className="h-4 w-4 text-primary" />
             Reference Links
+            <span className="text-xs text-muted-foreground">(optional)</span>
           </label>
           <p className="text-xs text-muted-foreground">
             Add links to Pinterest boards, Behance projects, Dribbble shots, or
@@ -234,12 +207,6 @@ export function StepReferences({ onNext, onBack }: StepReferencesProps) {
               </motion.div>
             )}
           </AnimatePresence>
-
-          {errors.referenceLinks && (
-            <p className="text-sm text-destructive">
-              {errors.referenceLinks.message}
-            </p>
-          )}
         </div>
 
         {/* File Upload Section */}
@@ -247,6 +214,7 @@ export function StepReferences({ onNext, onBack }: StepReferencesProps) {
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Upload className="h-4 w-4 text-primary" />
             Upload Files
+            <span className="text-xs text-muted-foreground">(optional)</span>
           </label>
           <p className="text-xs text-muted-foreground">
             Upload logos, brand guidelines, photos, or any assets we should use.
@@ -270,22 +238,19 @@ export function StepReferences({ onNext, onBack }: StepReferencesProps) {
             that match your expectations.
           </p>
         </div>
+      </div>
 
-        {/* Navigation */}
-        <div className="flex gap-3 pt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onBack}
-            className="flex-1"
-          >
-            Back
-          </Button>
-          <Button type="submit" className="flex-1">
-            Continue
-          </Button>
-        </div>
-      </form>
-    </motion.div>
+      {/* Navigation */}
+      <div className="mt-8 flex justify-between">
+        <Button type="button" variant="outline" onClick={prevStep}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+        <Button type="submit" size="lg" className="min-w-[140px]">
+          Continue
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    </form>
   );
 }

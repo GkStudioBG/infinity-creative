@@ -101,16 +101,16 @@ Build the top sections of the landing page:
 
 ---
 
-### [ ] Step: Landing Page - Pricing & Rules
+### [x] Step: Landing Page - Pricing & Rules
 <!-- chat-id: d1f5235d-7133-4708-82f1-19f27f6fda16 -->
 
 Build the pricing and rules sections:
 
-- [ ] Create PricingTable component with 2 packages (Single €49, Pack of 5 €199)
-- [ ] Highlight express delivery (+€30-50) and source files options
-- [ ] Create Rules section with clear policy text
-- [ ] Style for visual hierarchy and readability
-- [ ] Add "Order Now" CTA buttons linking to /order
+- [x] Create PricingTable component with 2 packages (Single €49, Pack of 5 €199)
+- [x] Highlight express delivery (+€30-50) and source files options
+- [x] Create Rules section with clear policy text
+- [x] Style for visual hierarchy and readability
+- [x] Add "Order Now" CTA buttons linking to /order
 
 **Verification**: Prices display correctly, CTAs navigate to order page
 
@@ -167,6 +167,7 @@ Build the content and references steps:
 ---
 
 ### [ ] Step: Order Form - Steps 4 & 5 (Options & Summary)
+<!-- chat-id: ae8dc528-0239-413d-bb89-00faf57aa5f4 -->
 
 Complete the order form:
 

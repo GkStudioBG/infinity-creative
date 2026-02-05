@@ -5,6 +5,8 @@ import { ArrowLeft } from "lucide-react";
 import { useOrderStore } from "@/hooks/use-order-store";
 import { StepIndicator } from "./step-indicator";
 import { StepProjectType } from "./step-project-type";
+import { StepContent } from "./step-content";
+import { StepReferences } from "./step-references";
 import { Container } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { slideLeft, slideRight } from "@/lib/animations";
@@ -30,9 +32,9 @@ export function FormWrapper() {
       case 1:
         return <StepProjectType />;
       case 2:
-        return <PlaceholderStep step={2} />;
+        return <StepContent />;
       case 3:
-        return <PlaceholderStep step={3} />;
+        return <StepReferences />;
       case 4:
         return <PlaceholderStep step={4} />;
       case 5:

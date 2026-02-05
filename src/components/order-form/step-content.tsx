@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { FileText, Ruler } from "lucide-react";
+import { FileText, Ruler, ArrowRight, ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,15 +18,9 @@ import {
 import { useOrderStore } from "@/hooks/use-order-store";
 import { step2Schema, type Step2Data } from "@/schemas/order.schema";
 import { DIMENSION_PRESETS } from "@/lib/constants";
-import { slideLeft } from "@/lib/animations";
 
-interface StepContentProps {
-  onNext: () => void;
-  onBack: () => void;
-}
-
-export function StepContent({ onNext, onBack }: StepContentProps) {
-  const { formData, updateFormData } = useOrderStore();
+export function StepContent() {
+  const { formData, updateFormData, nextStep, prevStep } = useOrderStore();
 
   const {
     register,
@@ -44,6 +38,7 @@ export function StepContent({ onNext, onBack }: StepContentProps) {
   });
 
   const selectedDimension = watch("dimensions");
+  const contentText = watch("contentText");
   const isCustomDimension =
     selectedDimension === "custom" ||
     (selectedDimension &&
@@ -51,7 +46,7 @@ export function StepContent({ onNext, onBack }: StepContentProps) {
 
   const onSubmit = (data: Step2Data) => {
     updateFormData(data);
-    onNext();
+    nextStep();
   };
 
   const handleDimensionPreset = (value: string) => {
@@ -62,24 +57,18 @@ export function StepContent({ onNext, onBack }: StepContentProps) {
     }
   };
 
+  const characterCount = contentText?.length || 0;
+
   return (
-    <motion.div
-      variants={slideLeft}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      className="space-y-6"
-    >
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold text-foreground">
-          Content Details
-        </h2>
-        <p className="text-muted-foreground">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold">Content Details</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Tell us what you need. The more detail, the better the result.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="space-y-6">
         {/* Content Text */}
         <div className="space-y-3">
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
@@ -92,15 +81,21 @@ export function StepContent({ onNext, onBack }: StepContentProps) {
             placeholder="Describe your project in detail. Include any text that should appear in the design, key messages, target audience, style preferences, and any other relevant information..."
             className="min-h-[180px] resize-none"
           />
-          {errors.contentText && (
-            <p className="text-sm text-destructive">
-              {errors.contentText.message}
+          <div className="flex items-center justify-between">
+            {errors.contentText ? (
+              <p className="text-sm text-destructive">
+                {errors.contentText.message}
+              </p>
+            ) : (
+              <p className="text-xs text-muted-foreground">
+                Minimum 10 characters. Be as specific as possible to avoid
+                revisions.
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground">
+              {characterCount}/5000
             </p>
-          )}
-          <p className="text-xs text-muted-foreground">
-            Minimum 10 characters. Be as specific as possible to avoid
-            revisions.
-          </p>
+          </div>
         </div>
 
         {/* Dimensions */}
@@ -108,6 +103,7 @@ export function StepContent({ onNext, onBack }: StepContentProps) {
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Ruler className="h-4 w-4 text-primary" />
             Dimensions / Format
+            <span className="text-xs text-muted-foreground">(optional)</span>
           </label>
 
           <Select onValueChange={handleDimensionPreset}>
@@ -143,26 +139,28 @@ export function StepContent({ onNext, onBack }: StepContentProps) {
             </p>
           )}
         </div>
+      </div>
 
-        {/* Navigation */}
-        <div className="flex gap-3 pt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onBack}
-            className="flex-1"
-          >
-            Back
-          </Button>
-          <Button
-            type="submit"
-            disabled={!isValid}
-            className="flex-1"
-          >
-            Continue
-          </Button>
-        </div>
-      </form>
-    </motion.div>
+      {/* Navigation */}
+      <div className="mt-8 flex justify-between">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={prevStep}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+        <Button
+          type="submit"
+          size="lg"
+          disabled={!isValid}
+          className="min-w-[140px]"
+        >
+          Continue
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    </form>
   );
 }
