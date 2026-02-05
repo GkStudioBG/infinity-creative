@@ -3,6 +3,8 @@ import { stripe } from "@/lib/stripe/server";
 import { PRICING, DELIVERY_TIMES, REVISIONS_INCLUDED } from "@/lib/constants";
 import type { OrderFormData } from "@/types";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as OrderFormData;

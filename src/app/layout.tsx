@@ -9,17 +9,39 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://infinity-creative.pages.dev"),
   title: "Infinity Creative | Design Services in 48 Hours",
   description:
     "Professional design services delivered in 48 hours. No meetings, no scope creep. Just quality design.",
-  keywords: ["design", "logo", "branding", "social media", "graphics"],
+  keywords: ["design", "logo", "branding", "social media", "graphics", "design service", "productized service", "fast delivery"],
   authors: [{ name: "Infinity Creative Ltd" }],
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     type: "website",
+    locale: "en_US",
+    url: "https://infinity-creative.pages.dev",
     title: "Infinity Creative | Design Services in 48 Hours",
     description:
       "Professional design services delivered in 48 hours. No meetings, no scope creep. Just quality design.",
     siteName: "Infinity Creative",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Infinity Creative - Design Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Infinity Creative | Design Services in 48 Hours",
+    description:
+      "Professional design services delivered in 48 hours. No meetings, no scope creep. Just quality design.",
+    images: ["/og-image.jpg"],
   },
 };
 

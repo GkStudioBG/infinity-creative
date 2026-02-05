@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, XCircle } from "lucide-react";
+import { ArrowLeft, XCircle, Loader2 } from "lucide-react";
 import { useOrderStore } from "@/hooks/use-order-store";
 import { StepIndicator } from "./step-indicator";
 import { StepProjectType } from "./step-project-type";
@@ -25,7 +25,7 @@ const STEP_TITLES = [
   "Summary & Payment",
 ];
 
-export function FormWrapper() {
+function FormWrapperContent() {
   const { currentStep, prevStep: goToPrevStep, getDirection } = useOrderStore();
   const searchParams = useSearchParams();
   const [showCancelNotice, setShowCancelNotice] = useState(false);
@@ -142,6 +142,23 @@ export function FormWrapper() {
         )}
       </Container>
     </div>
+  );
+}
+
+export function FormWrapper() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            <p className="text-muted-foreground">Loading form...</p>
+          </div>
+        </div>
+      }
+    >
+      <FormWrapperContent />
+    </Suspense>
   );
 }
 

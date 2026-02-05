@@ -1,0 +1,9 @@
+name = "infinity-productized-service"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = ".vercel/output/static"
+
+# Environment variables for Cloudflare Pages
+# These should be set in the Cloudflare Pages dashboard
+
+[build]
+command = "npx @cloudflare/next-on-pages@1"

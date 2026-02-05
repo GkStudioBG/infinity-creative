@@ -42,3 +42,7 @@ coverage/
 # Misc
 *.pem
 .vercel
+
+# Cloudflare
+.wrangler/
+wrangler.toml.local

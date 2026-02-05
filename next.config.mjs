@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Note: Static export disabled for API routes
+  // Will need to migrate to Supabase Edge Functions for Cloudflare Pages deployment
   trailingSlash: true,
   images: {
     unoptimized: true,
