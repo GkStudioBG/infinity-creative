@@ -186,18 +186,18 @@ Complete the order form:
 
 ---
 
-### [ ] Step: Supabase Integration
+### [x] Step: Supabase Integration
 <!-- chat-id: 7e824af2-6b8c-4294-ad13-203641b25ff0 -->
 
 Setup Supabase backend:
 
-- [ ] Create Supabase project and configure
-- [ ] Create database migration with orders table schema
-- [ ] Setup Row Level Security policies
-- [ ] Create Supabase client utilities (browser & server)
-- [ ] Generate TypeScript types from database schema
-- [ ] Create storage bucket for file uploads
-- [ ] Implement file upload to Supabase Storage
+- [x] Create Supabase project and configure
+- [x] Create database migration with orders table schema
+- [x] Setup Row Level Security policies
+- [x] Create Supabase client utilities (browser & server)
+- [x] Generate TypeScript types from database schema
+- [x] Create storage bucket for file uploads
+- [x] Implement file upload to Supabase Storage
 
 **Verification**: Can create order in database, files upload to storage
 
