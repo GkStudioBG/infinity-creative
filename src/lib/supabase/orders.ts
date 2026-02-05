@@ -13,7 +13,7 @@ export async function createOrder(
   try {
     const { data, error } = await supabase
       .from("orders")
-      .insert(orderData as any)
+      .insert(orderData)
       .select()
       .single();
 
@@ -123,7 +123,7 @@ export async function updateOrder(
   try {
     const { data, error } = await supabaseAdmin
       .from("orders")
-      .update(updates as any)
+      .update(updates)
       .eq("id", orderId)
       .select()
       .single();
@@ -168,7 +168,7 @@ export async function markOrderAsPaid(
         payment_status: "paid",
         stripe_payment_id: paymentId,
         delivery_deadline: deliveryDeadline.toISOString(),
-      } as any)
+      })
       .eq("stripe_checkout_session_id", sessionId)
       .select()
       .single();
@@ -204,7 +204,7 @@ export async function markOrderAsDelivered(
         order_status: "delivered",
         delivered_at: new Date().toISOString(),
         delivery_files: deliveryFiles,
-      } as any)
+      })
       .eq("id", orderId)
       .select()
       .single();

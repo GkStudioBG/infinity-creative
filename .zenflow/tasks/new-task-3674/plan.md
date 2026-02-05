@@ -219,18 +219,18 @@ Implement payment flow:
 
 ---
 
-### [ ] Step: Webhook & Email Notifications
+### [x] Step: Webhook & Email Notifications
 <!-- chat-id: 636bb5b4-d901-48cc-8035-a07014ac9a0a -->
 
 Setup post-payment automation:
 
-- [ ] Create Supabase Edge Function for Stripe webhook
-- [ ] Verify webhook signature
-- [ ] Update order status to 'paid' on successful payment
-- [ ] Calculate and set delivery deadline
-- [ ] Setup Resend account and API
-- [ ] Create order confirmation email template
-- [ ] Send confirmation email on successful payment
+- [x] Create Supabase Edge Function for Stripe webhook
+- [x] Verify webhook signature
+- [x] Update order status to 'paid' on successful payment
+- [x] Calculate and set delivery deadline
+- [x] Setup Resend account and API
+- [x] Create order confirmation email template
+- [x] Send confirmation email on successful payment
 
 **Verification**: Webhook updates order, email sends correctly
 
