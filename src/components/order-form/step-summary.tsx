@@ -71,12 +71,34 @@ export function StepSummary() {
 
   const onSubmit = async () => {
     setIsSubmitting(true);
-    // In the future, this will redirect to Stripe Checkout
-    // For now, we'll just simulate a redirect
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    // TODO: Implement Stripe checkout integration
-    alert("Stripe checkout integration will be implemented in the next step!");
-    setIsSubmitting(false);
+
+    try {
+      // Create checkout session
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
+      const { url } = await response.json();
+
+      // Redirect to Stripe Checkout
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Failed to proceed to checkout. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (

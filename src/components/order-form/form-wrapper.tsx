@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, XCircle } from "lucide-react";
 import { useOrderStore } from "@/hooks/use-order-store";
 import { StepIndicator } from "./step-indicator";
 import { StepProjectType } from "./step-project-type";
@@ -25,9 +27,24 @@ const STEP_TITLES = [
 
 export function FormWrapper() {
   const { currentStep, prevStep: goToPrevStep, getDirection } = useOrderStore();
+  const searchParams = useSearchParams();
+  const [showCancelNotice, setShowCancelNotice] = useState(false);
 
   const direction = getDirection();
   const variants = direction === "forward" ? slideLeft : slideRight;
+
+  useEffect(() => {
+    // Check if user returned from canceled checkout
+    const canceled = searchParams.get("canceled");
+    if (canceled === "true") {
+      setShowCancelNotice(true);
+      // Auto-hide after 5 seconds
+      const timer = setTimeout(() => {
+        setShowCancelNotice(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
 
   const renderStep = () => {
     switch (currentStep) {
@@ -57,6 +74,34 @@ export function FormWrapper() {
             Tell us about your project and we&apos;ll deliver within 48 hours
           </p>
         </div>
+
+        {/* Cancellation Notice */}
+        <AnimatePresence>
+          {showCancelNotice && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="mb-6 flex items-center gap-3 rounded-lg border border-yellow-500/50 bg-yellow-500/10 p-4"
+            >
+              <XCircle className="h-5 w-5 text-yellow-500" />
+              <div className="flex-1">
+                <p className="text-sm font-medium">Payment Canceled</p>
+                <p className="text-xs text-muted-foreground">
+                  Your order is still here. Continue when you&apos;re ready.
+                </p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowCancelNotice(false)}
+                className="h-auto p-1"
+              >
+                <XCircle className="h-4 w-4" />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <StepIndicator
           currentStep={currentStep}

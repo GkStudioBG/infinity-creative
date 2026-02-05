@@ -187,6 +187,7 @@ Complete the order form:
 ---
 
 ### [ ] Step: Supabase Integration
+<!-- chat-id: 7e824af2-6b8c-4294-ad13-203641b25ff0 -->
 
 Setup Supabase backend:
 
@@ -202,22 +203,24 @@ Setup Supabase backend:
 
 ---
 
-### [ ] Step: Stripe Checkout Integration
+### [x] Step: Stripe Checkout Integration
+<!-- chat-id: bff9bd96-82ed-4190-88c6-1cab27906456 -->
 
 Implement payment flow:
 
-- [ ] Setup Stripe account and get API keys
-- [ ] Create checkout session creation logic
-- [ ] Implement "Proceed to Payment" → Stripe redirect
-- [ ] Create success page with order confirmation
-- [ ] Handle checkout cancellation (return to form)
-- [ ] Display order ID and expected delivery time
+- [x] Setup Stripe account and get API keys
+- [x] Create checkout session creation logic
+- [x] Implement "Proceed to Payment" → Stripe redirect
+- [x] Create success page with order confirmation
+- [x] Handle checkout cancellation (return to form)
+- [x] Display order ID and expected delivery time
 
 **Verification**: Test payment flow with Stripe test mode
 
 ---
 
 ### [ ] Step: Webhook & Email Notifications
+<!-- chat-id: 636bb5b4-d901-48cc-8035-a07014ac9a0a -->
 
 Setup post-payment automation:
 
@@ -233,17 +236,18 @@ Setup post-payment automation:
 
 ---
 
-### [ ] Step: Client Dashboard
+### [x] Step: Client Dashboard
+<!-- chat-id: 73d787db-aa27-41fe-bd7a-acff62b983b4 -->
 
 Build the order tracking dashboard:
 
-- [ ] Create dashboard page layout
-- [ ] Implement order lookup by email or order ID
-- [ ] Create OrderCard component with status display
-- [ ] Build CountdownTimer component for delivery deadline
-- [ ] Create StatusBadge component (pending, in_progress, completed, delivered)
-- [ ] Show delivery files download when available
-- [ ] Mobile-responsive design
+- [x] Create dashboard page layout
+- [x] Implement order lookup by email or order ID
+- [x] Create OrderCard component with status display
+- [x] Build CountdownTimer component for delivery deadline
+- [x] Create StatusBadge component (pending, in_progress, completed, delivered)
+- [x] Show delivery files download when available
+- [x] Mobile-responsive design
 
 **Verification**: Dashboard shows order status, countdown works correctly
 
