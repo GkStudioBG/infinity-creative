@@ -38,9 +38,9 @@ export function FormWrapper() {
       case 3:
         return <StepReferences />;
       case 4:
-        return <PlaceholderStep step={4} />;
+        return <StepOptions />;
       case 5:
-        return <PlaceholderStep step={5} />;
+        return <StepSummary />;
       default:
         return <StepProjectType />;
     }
@@ -100,28 +100,3 @@ export function FormWrapper() {
   );
 }
 
-// Placeholder component for steps 2-5 (to be implemented in future)
-function PlaceholderStep({ step }: { step: number }) {
-  const { nextStep, prevStep } = useOrderStore();
-
-  return (
-    <div className="flex min-h-[300px] flex-col items-center justify-center gap-4">
-      <p className="text-lg font-medium">Step {step}: {STEP_TITLES[step - 1]}</p>
-      <p className="text-muted-foreground">This step will be implemented soon</p>
-      <div className="flex gap-2">
-        <Button variant="outline" onClick={prevStep}>
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
-        {step < 5 && (
-          <Button onClick={nextStep}>
-            Continue
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// Re-export STEP_TITLES for use in placeholder
-const PlaceholderStepTitles = STEP_TITLES;

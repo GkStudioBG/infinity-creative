@@ -132,17 +132,17 @@ Complete the landing page:
 
 ---
 
-### [ ] Step: Order Form - Multi-step Container & Step 1
+### [x] Step: Order Form - Multi-step Container & Step 1
 <!-- chat-id: b0cf6aa3-8e5d-4430-9bf8-54ac798e2840 -->
 
 Create the order form foundation and first step:
 
-- [ ] Create FormWrapper with multi-step state management (Zustand)
-- [ ] Build StepIndicator progress bar component
-- [ ] Implement Step 1: Project Type selection (Logo, Banner, Social, Print, Other)
-- [ ] Create icon-based selection cards
-- [ ] Add form validation with Zod schema
-- [ ] Implement next/back navigation with animations
+- [x] Create FormWrapper with multi-step state management (Zustand)
+- [x] Build StepIndicator progress bar component
+- [x] Implement Step 1: Project Type selection (Logo, Banner, Social, Print, Other)
+- [x] Create icon-based selection cards
+- [x] Add form validation with Zod schema
+- [x] Implement next/back navigation with animations
 
 **Verification**: Step 1 validates, progress bar updates, data persists in store
 
