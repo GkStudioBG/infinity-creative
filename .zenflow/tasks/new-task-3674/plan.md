@@ -166,21 +166,21 @@ Build the content and references steps:
 
 ---
 
-### [ ] Step: Order Form - Steps 4 & 5 (Options & Summary)
+### [x] Step: Order Form - Steps 4 & 5 (Options & Summary)
 <!-- chat-id: ae8dc528-0239-413d-bb89-00faf57aa5f4 -->
 
 Complete the order form:
 
-- [ ] Step 4: Additional Options
-  - [ ] Express delivery checkbox (+€30)
-  - [ ] Source files checkbox (+€20)
-  - [ ] Email input for order delivery
-- [ ] Step 5: Order Summary
-  - [ ] Display all selected options
-  - [ ] Calculate and show total price
-  - [ ] Show terms acceptance checkbox
-  - [ ] "Proceed to Payment" button
-- [ ] Implement price calculation logic in Zustand store
+- [x] Step 4: Additional Options
+  - [x] Express delivery checkbox (+€30)
+  - [x] Source files checkbox (+€20)
+  - [x] Email input for order delivery
+- [x] Step 5: Order Summary
+  - [x] Display all selected options
+  - [x] Calculate and show total price
+  - [x] Show terms acceptance checkbox
+  - [x] "Proceed to Payment" button
+- [x] Implement price calculation logic in Zustand store
 
 **Verification**: Total calculates correctly, summary shows all data
 
