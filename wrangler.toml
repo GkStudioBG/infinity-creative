@@ -1,9 +1,6 @@
-name = "infinity-productized-service"
+name = "infinity-creative"
 compatibility_date = "2024-01-01"
-pages_build_output_dir = ".vercel/output/static"
+pages_build_output_dir = ".open-next/assets"
 
-# Environment variables for Cloudflare Pages
-# These should be set in the Cloudflare Pages dashboard
-
-[build]
-command = "npx @cloudflare/next-on-pages@1"
+[vars]
+ENVIRONMENT = "production"
