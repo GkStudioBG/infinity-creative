@@ -2,18 +2,21 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowRight, Clock, Shield, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { fadeIn, staggerContainer, springHover, viewportTrigger } from "@/lib/animations";
 
-const benefits = [
-  { icon: Clock, text: "48h Delivery" },
-  { icon: Shield, text: "Fixed Price" },
-  { icon: Zap, text: "No Meetings" },
-];
-
 export function CTASection() {
+  const t = useTranslations("cta");
+
+  const benefits = [
+    { icon: Clock, textKey: "benefit48h" },
+    { icon: Shield, textKey: "benefitFixed" },
+    { icon: Zap, textKey: "benefitNoMeetings" },
+  ];
+
   return (
     <section className="py-20 sm:py-28">
       <Container>
@@ -36,7 +39,7 @@ export function CTASection() {
               variants={fadeIn}
               className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Ready to Get Your Design?
+              {t("title")}
             </motion.h2>
 
             {/* Subheadline */}
@@ -44,8 +47,7 @@ export function CTASection() {
               variants={fadeIn}
               className="mb-8 text-lg text-muted-foreground"
             >
-              Stop waiting weeks for a simple design. Fill out the form, pay,
-              and receive your work in 48 hours or less.
+              {t("subtitle")}
             </motion.p>
 
             {/* Benefits */}
@@ -53,10 +55,10 @@ export function CTASection() {
               variants={fadeIn}
               className="mb-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
             >
-              {benefits.map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-2">
+              {benefits.map(({ icon: Icon, textKey }) => (
+                <div key={textKey} className="flex items-center gap-2">
                   <Icon className="h-4 w-4 text-primary" />
-                  <span>{text}</span>
+                  <span>{t(textKey)}</span>
                 </div>
               ))}
             </motion.div>
@@ -66,7 +68,7 @@ export function CTASection() {
               <motion.div {...springHover} className="inline-block">
                 <Button asChild size="lg" className="h-14 px-10 text-lg">
                   <Link href="/order">
-                    Start Your Order
+                    {t("buttonText")}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
@@ -78,7 +80,7 @@ export function CTASection() {
               variants={fadeIn}
               className="mt-6 text-xs text-muted-foreground"
             >
-              Secure payment via Stripe. 2 revisions included in every order.
+              {t("trustNote")}
             </motion.p>
           </div>
         </motion.div>

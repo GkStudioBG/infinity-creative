@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Container } from "./container";
 import { Logo } from "@/components/shared/logo";
 
 export function Footer() {
+  const t = useTranslations("footer");
+  const tHeader = useTranslations("header");
+  const tCommon = useTranslations("common");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,21 +19,20 @@ export function Footer() {
           <div className="md:col-span-2">
             <Logo />
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              Professional design services delivered in 48 hours. No meetings, no scope creep.
-              Just quality design at a fixed price.
+              {t("description")}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Quick Links</h3>
+            <h3 className="mb-4 text-sm font-semibold">{t("quickLinks")}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/#how-it-works"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  How it Works
+                  {tHeader("howItWorks")}
                 </Link>
               </li>
               <li>
@@ -35,7 +40,7 @@ export function Footer() {
                   href="/#pricing"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Pricing
+                  {tHeader("pricing")}
                 </Link>
               </li>
               <li>
@@ -43,7 +48,7 @@ export function Footer() {
                   href="/#portfolio"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Portfolio
+                  {tHeader("portfolio")}
                 </Link>
               </li>
               <li>
@@ -51,7 +56,7 @@ export function Footer() {
                   href="/order"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Order Now
+                  {tCommon("orderNow")}
                 </Link>
               </li>
             </ul>
@@ -59,14 +64,14 @@ export function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Support</h3>
+            <h3 className="mb-4 text-sm font-semibold">{t("support")}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/dashboard"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Track Order
+                  {tHeader("trackOrder")}
                 </Link>
               </li>
               <li>
@@ -74,7 +79,7 @@ export function Footer() {
                   href="/#rules"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Terms & Conditions
+                  {t("termsConditions")}
                 </Link>
               </li>
               <li>
@@ -82,7 +87,7 @@ export function Footer() {
                   href="mailto:hello@infinity.design"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  Contact
+                  {t("contact")}
                 </a>
               </li>
             </ul>
@@ -92,10 +97,10 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} Infinity Creative Ltd. All rights reserved.
+            &copy; {currentYear} {t("copyright")}
           </p>
           <p className="text-xs text-muted-foreground">
-            All prices exclude VAT where applicable.
+            {t("vatNote")}
           </p>
         </div>
       </Container>

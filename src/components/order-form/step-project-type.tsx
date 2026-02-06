@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import {
   Hexagon,
   Image,
@@ -18,46 +19,20 @@ import { cn } from "@/lib/utils";
 import { staggerContainer, cardEntrance, springHover } from "@/lib/animations";
 import type { ProjectType } from "@/types";
 
-const PROJECT_TYPE_OPTIONS: {
-  value: ProjectType;
-  label: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-}[] = [
-  {
-    value: "logo",
-    label: "Logo",
-    description: "Brand identity, logo design, and variations",
-    icon: Hexagon,
-  },
-  {
-    value: "banner",
-    label: "Banner",
-    description: "Web banners, ads, and promotional graphics",
-    icon: Image,
-  },
-  {
-    value: "social",
-    label: "Social Media",
-    description: "Posts, stories, and social content",
-    icon: Share2,
-  },
-  {
-    value: "print",
-    label: "Print Materials",
-    description: "Flyers, brochures, and print designs",
-    icon: FileText,
-  },
-  {
-    value: "other",
-    label: "Other",
-    description: "Custom design requests",
-    icon: MoreHorizontal,
-  },
-];
+const PROJECT_TYPE_ICONS: Record<ProjectType, React.ComponentType<{ className?: string }>> = {
+  logo: Hexagon,
+  banner: Image,
+  social: Share2,
+  print: FileText,
+  other: MoreHorizontal,
+};
 
 export function StepProjectType() {
   const { formData, updateFormData, nextStep } = useOrderStore();
+  const t = useTranslations("orderForm.step1");
+  const tCommon = useTranslations("common");
+
+  const projectTypes: ProjectType[] = ["logo", "banner", "social", "print", "other"];
 
   const {
     handleSubmit,
@@ -86,9 +61,9 @@ export function StepProjectType() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-6">
-        <h2 className="text-xl font-semibold">What type of design do you need?</h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Select the category that best describes your project
+          {t("subtitle")}
         </p>
       </div>
 
@@ -98,17 +73,17 @@ export function StepProjectType() {
         animate="visible"
         className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {PROJECT_TYPE_OPTIONS.map((option) => {
-          const Icon = option.icon;
-          const isSelected = selectedType === option.value;
+        {projectTypes.map((type) => {
+          const Icon = PROJECT_TYPE_ICONS[type];
+          const isSelected = selectedType === type;
 
           return (
             <motion.button
-              key={option.value}
+              key={type}
               type="button"
               variants={cardEntrance}
               {...springHover}
-              onClick={() => onSelectType(option.value)}
+              onClick={() => onSelectType(type)}
               className={cn(
                 "relative flex flex-col items-center rounded-lg border-2 p-6 text-center transition-all duration-200",
                 isSelected
@@ -152,9 +127,9 @@ export function StepProjectType() {
                 <Icon className="h-7 w-7" />
               </div>
 
-              <h3 className="font-semibold">{option.label}</h3>
+              <h3 className="font-semibold">{t(`types.${type}`)}</h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                {option.description}
+                {t(`types.${type}Desc`)}
               </p>
             </motion.button>
           );
@@ -168,7 +143,7 @@ export function StepProjectType() {
           disabled={!isValid}
           className="min-w-[140px]"
         >
-          Continue
+          {tCommon("continue")}
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>

@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowRight, Clock, CheckCircle2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/container";
 import { fadeIn, staggerContainer, springHover } from "@/lib/animations";
 
 export function Hero() {
+  const t = useTranslations("hero");
+  const tCommon = useTranslations("common");
+
   return (
     <section className="relative overflow-hidden py-20 sm:py-28 lg:py-36">
       {/* Background gradient */}
@@ -28,7 +32,7 @@ export function Hero() {
           <motion.div variants={fadeIn} className="mb-6 inline-flex">
             <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/50 px-4 py-2 text-sm text-muted-foreground backdrop-blur-sm">
               <Zap className="h-4 w-4 text-primary" />
-              Delivery in 48 hours or less
+              {t("badge")}
             </span>
           </motion.div>
 
@@ -37,9 +41,9 @@ export function Hero() {
             variants={fadeIn}
             className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl"
           >
-            Design in 48 Hours.
+            {t("title")}
             <br />
-            <span className="text-primary">No Meetings.</span>
+            <span className="text-primary">{t("titleHighlight")}</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -47,8 +51,7 @@ export function Hero() {
             variants={fadeIn}
             className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground sm:text-xl"
           >
-            Professional design services at a fixed price. No scope creep, no
-            endless revisions. Just quality design, delivered fast.
+            {t("subtitle")}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -59,7 +62,7 @@ export function Hero() {
             <motion.div {...springHover}>
               <Button asChild size="lg" className="h-12 px-8 text-base">
                 <Link href="/order">
-                  Order Now
+                  {tCommon("orderNow")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -71,7 +74,7 @@ export function Hero() {
                 size="lg"
                 className="h-12 px-8 text-base"
               >
-                <Link href="#pricing">View Pricing</Link>
+                <Link href="#pricing">{tCommon("viewPricing")}</Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -83,15 +86,15 @@ export function Hero() {
           >
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-primary" />
-              <span>48h Delivery</span>
+              <span>{t("trust48h")}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-primary" />
-              <span>2 Revisions Included</span>
+              <span>{t("trustRevisions")}</span>
             </div>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-primary" />
-              <span>Fixed Price</span>
+              <span>{t("trustFixed")}</span>
             </div>
           </motion.div>
         </motion.div>

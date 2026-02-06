@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Container } from "./container";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
@@ -11,6 +13,9 @@ interface HeaderProps {
 }
 
 export function Header({ showCta = true }: HeaderProps) {
+  const t = useTranslations("header");
+  const tCommon = useTranslations("common");
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <Container>
@@ -24,33 +29,34 @@ export function Header({ showCta = true }: HeaderProps) {
               href="/#how-it-works"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              How it Works
+              {t("howItWorks")}
             </Link>
             <Link
               href="/#pricing"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Pricing
+              {t("pricing")}
             </Link>
             <Link
               href="/#portfolio"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Portfolio
+              {t("portfolio")}
             </Link>
             <Link
               href="/dashboard"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Track Order
+              {t("trackOrder")}
             </Link>
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <LanguageSwitcher />
             <ThemeToggle />
             {showCta && (
               <Button asChild size="sm" className="hidden sm:inline-flex">
-                <Link href="/order">Order Now</Link>
+                <Link href="/order">{tCommon("orderNow")}</Link>
               </Button>
             )}
           </div>

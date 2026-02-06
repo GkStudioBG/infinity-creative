@@ -1,32 +1,32 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { FileText, CreditCard, Package } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { fadeIn, staggerContainer, cardEntrance, viewportTrigger } from "@/lib/animations";
 
-const steps = [
-  {
-    icon: FileText,
-    title: "1. Describe",
-    description:
-      "Fill out our simple form with your project details, requirements, and reference materials.",
-  },
-  {
-    icon: CreditCard,
-    title: "2. Pay",
-    description:
-      "Choose your package and complete payment securely. The timer starts immediately.",
-  },
-  {
-    icon: Package,
-    title: "3. Receive",
-    description:
-      "Get your professional design delivered to your inbox within 48 hours (or 24h with express).",
-  },
-];
-
 export function HowItWorks() {
+  const t = useTranslations("howItWorks");
+
+  const steps = [
+    {
+      icon: FileText,
+      titleKey: "step1Title",
+      descriptionKey: "step1Description",
+    },
+    {
+      icon: CreditCard,
+      titleKey: "step2Title",
+      descriptionKey: "step2Description",
+    },
+    {
+      icon: Package,
+      titleKey: "step3Title",
+      descriptionKey: "step3Description",
+    },
+  ];
+
   return (
     <section id="how-it-works" className="py-20 sm:py-28">
       <Container>
@@ -39,11 +39,10 @@ export function HowItWorks() {
           {/* Section header */}
           <motion.div variants={fadeIn} className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              How it Works
+              {t("title")}
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Three simple steps to get your design. No calls, no meetings, no
-              hassle.
+              {t("subtitle")}
             </p>
           </motion.div>
 
@@ -54,7 +53,7 @@ export function HowItWorks() {
 
             {steps.map((step, index) => (
               <motion.div
-                key={step.title}
+                key={step.titleKey}
                 variants={cardEntrance}
                 custom={index}
                 className="relative"
@@ -72,8 +71,8 @@ export function HowItWorks() {
                   </div>
 
                   {/* Content */}
-                  <h3 className="mb-3 text-xl font-semibold">{step.title}</h3>
-                  <p className="text-muted-foreground">{step.description}</p>
+                  <h3 className="mb-3 text-xl font-semibold">{t(step.titleKey)}</h3>
+                  <p className="text-muted-foreground">{t(step.descriptionKey)}</p>
                 </div>
               </motion.div>
             ))}

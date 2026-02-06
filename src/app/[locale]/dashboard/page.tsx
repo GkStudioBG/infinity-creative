@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,13 +12,13 @@ import { Search, Package, AlertCircle } from "lucide-react";
 import type { Order } from "@/types";
 
 export default function DashboardPage() {
+  const t = useTranslations("dashboard");
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Check if there's an order ID in URL params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const orderId = params.get("order_id");
@@ -32,7 +33,7 @@ export default function DashboardPage() {
     const searchValue = term || searchTerm;
 
     if (!searchValue.trim()) {
-      setError("Please enter an order ID or email address");
+      setError(t("noSearchTerm"));
       return;
     }
 
@@ -41,26 +42,14 @@ export default function DashboardPage() {
     setHasSearched(true);
 
     try {
-      // TODO: Replace with actual Supabase query
-      // For now, we'll simulate a mock API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Mock data for demonstration
-      // In production, this will query Supabase:
-      // const { data, error } = await supabase
-      //   .from('orders')
-      //   .select('*')
-      //   .or(`id.eq.${searchValue},email.eq.${searchValue}`)
-      //   .order('created_at', { ascending: false })
-
-      // For now, return empty array
       setOrders([]);
 
       if (orders.length === 0) {
-        setError("No orders found. Please check your order ID or email address.");
+        setError(t("noOrdersFound"));
       }
     } catch (err) {
-      setError("An error occurred while searching. Please try again.");
+      setError(t("searchError"));
       console.error("Search error:", err);
     } finally {
       setIsSearching(false);
@@ -80,10 +69,10 @@ export default function DashboardPage() {
           {/* Header */}
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-foreground">
-              Order Dashboard
+              {t("title")}
             </h1>
             <p className="mt-2 text-lg text-muted-foreground">
-              Track your design projects and download your files
+              {t("subtitle")}
             </p>
           </div>
 
@@ -92,17 +81,17 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Search className="h-5 w-5 text-blue-500" />
-                Find Your Order
+                {t("findOrder")}
               </CardTitle>
               <CardDescription>
-                Enter your order ID or the email address you used when placing the order
+                {t("findOrderDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex gap-2">
                 <Input
                   type="text"
-                  placeholder="Order ID or email address"
+                  placeholder={t("searchPlaceholder")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyPress={handleKeyPress}
@@ -117,7 +106,7 @@ export default function DashboardPage() {
                   {isSearching ? (
                     <LoadingSpinner className="h-4 w-4" />
                   ) : (
-                    "Search"
+                    t("searchButton")
                   )}
                 </Button>
               </div>
@@ -141,7 +130,7 @@ export default function DashboardPage() {
           {!isSearching && orders.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-foreground">
-                Your Orders ({orders.length})
+                {t("yourOrders")} ({orders.length})
               </h2>
               {orders.map((order) => (
                 <OrderCard key={order.id} order={order} />
@@ -154,12 +143,12 @@ export default function DashboardPage() {
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Package className="h-12 w-12 text-muted-foreground/50" />
                 <h3 className="mt-4 text-lg font-semibold text-foreground">
-                  No Orders Found
+                  {t("noOrdersTitle")}
                 </h3>
                 <p className="mt-2 text-center text-sm text-muted-foreground">
-                  We couldn&apos;t find any orders matching your search.
+                  {t("noOrdersText")}
                   <br />
-                  Please check your order ID or email address and try again.
+                  {t("noOrdersTextLine2")}
                 </p>
               </CardContent>
             </Card>
@@ -170,12 +159,12 @@ export default function DashboardPage() {
             <Card className="border-blue-500/20 bg-blue-500/5">
               <CardContent className="py-6">
                 <h3 className="mb-2 text-sm font-semibold text-foreground">
-                  Need Help Finding Your Order?
+                  {t("helpTitle")}
                 </h3>
                 <ul className="space-y-1 text-sm text-muted-foreground">
-                  <li>• Your order ID was sent to your email after purchase</li>
-                  <li>• You can also search using the email address you used to order</li>
-                  <li>• Order IDs are 8-character codes (e.g., A1B2C3D4)</li>
+                  <li>• {t("helpTip1")}</li>
+                  <li>• {t("helpTip2")}</li>
+                  <li>• {t("helpTip3")}</li>
                 </ul>
               </CardContent>
             </Card>

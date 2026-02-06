@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   ArrowLeft,
   CreditCard,
@@ -39,17 +40,12 @@ const PROJECT_TYPE_ICONS: Record<ProjectType, React.ComponentType<{ className?: 
   other: MoreHorizontal,
 };
 
-const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
-  logo: "Logo Design",
-  banner: "Banner",
-  social: "Social Media",
-  print: "Print Materials",
-  other: "Other",
-};
-
 export function StepSummary() {
   const { formData, prevStep, getTotalPrice } = useOrderStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const t = useTranslations("orderForm.step5");
+  const tStep1 = useTranslations("orderForm.step1.types");
+  const tCommon = useTranslations("common");
 
   const {
     setValue,
@@ -104,9 +100,9 @@ export function StepSummary() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-6">
-        <h2 className="text-xl font-semibold">Order Summary</h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Review your order before proceeding to payment
+          {t("subtitle")}
         </p>
       </div>
 
@@ -123,8 +119,8 @@ export function StepSummary() {
               <Icon className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h3 className="font-semibold">{PROJECT_TYPE_LABELS[formData.projectType]}</h3>
-              <p className="text-sm text-muted-foreground">Design project</p>
+              <h3 className="font-semibold">{tStep1(formData.projectType)}</h3>
+              <p className="text-sm text-muted-foreground">{t("designProject")}</p>
             </div>
           </div>
         </motion.div>
@@ -138,11 +134,11 @@ export function StepSummary() {
         >
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
             <FileText className="h-4 w-4 text-primary" />
-            Project Details
+            {t("projectDetails")}
           </h3>
           <div className="space-y-3">
             <div>
-              <p className="text-xs uppercase text-muted-foreground">Description</p>
+              <p className="text-xs uppercase text-muted-foreground">{t("description")}</p>
               <p className="mt-1 text-sm">
                 {formData.contentText.length > 150
                   ? `${formData.contentText.slice(0, 150)}...`
@@ -153,7 +149,7 @@ export function StepSummary() {
               <div>
                 <p className="flex items-center gap-1 text-xs uppercase text-muted-foreground">
                   <Ruler className="h-3 w-3" />
-                  Dimensions
+                  {t("dimensions")}
                 </p>
                 <p className="mt-1 text-sm">{formData.dimensions}</p>
               </div>
@@ -169,18 +165,18 @@ export function StepSummary() {
             transition={{ delay: 0.2 }}
             className="rounded-lg border border-border bg-card p-4"
           >
-            <h3 className="mb-3 text-sm font-semibold">References</h3>
+            <h3 className="mb-3 text-sm font-semibold">{t("references")}</h3>
             <div className="space-y-2 text-sm">
               {formData.referenceLinks.length > 0 && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Link2 className="h-4 w-4" />
-                  <span>{formData.referenceLinks.length} reference link(s)</span>
+                  <span>{formData.referenceLinks.length} {t("referenceLinks")}</span>
                 </div>
               )}
               {formData.uploadedFiles.length > 0 && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Paperclip className="h-4 w-4" />
-                  <span>{formData.uploadedFiles.length} file(s) uploaded</span>
+                  <span>{formData.uploadedFiles.length} {t("filesUploaded")}</span>
                 </div>
               )}
             </div>
@@ -194,15 +190,15 @@ export function StepSummary() {
           transition={{ delay: 0.25 }}
           className="rounded-lg border border-border bg-card p-4"
         >
-          <h3 className="mb-3 text-sm font-semibold">Delivery</h3>
+          <h3 className="mb-3 text-sm font-semibold">{t("delivery")}</h3>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span>
                 {formData.isExpress ? (
-                  <span className="text-primary font-medium">Express: {deliveryTime} hours</span>
+                  <span className="text-primary font-medium">{t("expressLabel")}: {deliveryTime} {t("hours")}</span>
                 ) : (
-                  <span>Standard: {deliveryTime} hours</span>
+                  <span>{t("standardLabel")}: {deliveryTime} {t("hours")}</span>
                 )}
               </span>
             </div>
@@ -220,17 +216,17 @@ export function StepSummary() {
           transition={{ delay: 0.3 }}
           className="rounded-lg border-2 border-primary/20 bg-primary/5 p-4"
         >
-          <h3 className="mb-4 text-sm font-semibold">Pricing</h3>
+          <h3 className="mb-4 text-sm font-semibold">{t("pricingTitle")}</h3>
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span>Single Design</span>
+              <span>{t("singleDesign")}</span>
               <span>{PRICING.singleDesign}</span>
             </div>
             {formData.isExpress && (
               <div className="flex items-center justify-between text-sm">
                 <span className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-primary" />
-                  Express Delivery
+                  {t("expressDelivery")}
                 </span>
                 <span>+{PRICING.expressFee}</span>
               </div>
@@ -239,14 +235,14 @@ export function StepSummary() {
               <div className="flex items-center justify-between text-sm">
                 <span className="flex items-center gap-2">
                   <FileCode className="h-4 w-4 text-primary" />
-                  Source Files
+                  {t("sourceFiles")}
                 </span>
                 <span>+{PRICING.sourceFilesFee}</span>
               </div>
             )}
             <div className="my-3 border-t border-border" />
             <div className="flex items-center justify-between">
-              <span className="text-lg font-bold">Total</span>
+              <span className="text-lg font-bold">{t("total")}</span>
               <span className="text-2xl font-bold text-primary">
                 {totalPrice}
                 <span className="text-sm font-normal text-muted-foreground ml-1">
@@ -264,23 +260,23 @@ export function StepSummary() {
           transition={{ delay: 0.35 }}
           className="rounded-lg border border-border bg-muted/50 p-4"
         >
-          <h3 className="mb-3 text-sm font-semibold">What&apos;s Included</h3>
+          <h3 className="mb-3 text-sm font-semibold">{t("whatsIncluded")}</h3>
           <div className="grid gap-2 text-sm sm:grid-cols-2">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>{REVISIONS_INCLUDED} rounds of revisions</span>
+              <span>{t("revisionsIncluded")}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>{deliveryTime}h delivery</span>
+              <span>{deliveryTime}h {t("deliveryTime").split(" ")[0]}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>High-resolution files</span>
+              <span>{t("hiResFiles")}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>Commercial license</span>
+              <span>{t("commercialLicense")}</span>
             </div>
           </div>
         </motion.div>
@@ -307,18 +303,18 @@ export function StepSummary() {
           />
           <div className="flex-1">
             <p className="text-sm">
-              I accept the{" "}
+              {t("termsAccept")}{" "}
               <a
                 href="/terms"
                 onClick={(e) => e.stopPropagation()}
                 className="font-medium text-primary hover:underline"
               >
-                terms and conditions
+                {t("termsLink")}
               </a>{" "}
-              and understand the revision policy.
+              {t("termsEnd")}
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              {REVISIONS_INCLUDED} minor revisions included. Additional changes: {PRICING.additionalRevisionRate}/hour.
+              {t("termsNote")} {PRICING.additionalRevisionRate}/hour.
             </p>
           </div>
         </motion.div>
@@ -331,7 +327,7 @@ export function StepSummary() {
           className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
         >
           <Shield className="h-4 w-4" />
-          <span>Secure payment powered by Stripe</span>
+          <span>{t("securePayment")}</span>
         </motion.div>
       </div>
 
@@ -339,7 +335,7 @@ export function StepSummary() {
       <div className="mt-8 flex justify-between">
         <Button type="button" variant="outline" onClick={prevStep} disabled={isSubmitting}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {tCommon("back")}
         </Button>
         <Button
           type="submit"
@@ -350,12 +346,12 @@ export function StepSummary() {
           {isSubmitting ? (
             <>
               <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-              Processing...
+              {t("processing")}
             </>
           ) : (
             <>
               <CreditCard className="mr-2 h-4 w-4" />
-              Proceed to Payment
+              {t("proceedToPayment")}
             </>
           )}
         </Button>

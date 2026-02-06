@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   CheckCircle2,
   Mail,
@@ -17,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/layout";
-import { DELIVERY_TIMES, PRICING } from "@/lib/constants";
+import { DELIVERY_TIMES } from "@/lib/constants";
 
 interface OrderDetails {
   sessionId: string;
@@ -32,6 +33,7 @@ interface OrderDetails {
 function SuccessPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations("orderSuccess");
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,12 +42,11 @@ function SuccessPageContent() {
 
   useEffect(() => {
     if (!sessionId) {
-      setError("No session ID found. Please contact support.");
+      setError(t("noSessionError"));
       setIsLoading(false);
       return;
     }
 
-    // Fetch order details from Stripe session
     const fetchOrderDetails = async () => {
       try {
         const response = await fetch(`/api/checkout/session?session_id=${sessionId}`);
@@ -58,21 +59,21 @@ function SuccessPageContent() {
         setOrderDetails(data);
       } catch (err) {
         console.error("Error fetching order details:", err);
-        setError("Failed to load order details. Please check your email for confirmation.");
+        setError(t("fetchError"));
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchOrderDetails();
-  }, [sessionId]);
+  }, [sessionId, t]);
 
   if (isLoading) {
     return (
       <Container className="flex min-h-screen items-center justify-center py-20">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-12 w-12 animate-spin text-primary" />
-          <p className="text-muted-foreground">Loading your order details...</p>
+          <p className="text-muted-foreground">{t("loadingDetails")}</p>
         </div>
       </Container>
     );
@@ -88,15 +89,15 @@ function SuccessPageContent() {
                 <AlertCircle className="h-8 w-8 text-destructive" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold">Something went wrong</h2>
+                <h2 className="text-xl font-semibold">{t("errorTitle")}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{error}</p>
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => router.push("/")}>
                   <Home className="mr-2 h-4 w-4" />
-                  Go Home
+                  {t("viewDashboard")}
                 </Button>
-                <Button onClick={() => router.push("/dashboard")}>View Dashboard</Button>
+                <Button onClick={() => router.push("/dashboard")}>{t("viewDashboard")}</Button>
               </div>
             </div>
           </CardContent>
@@ -127,10 +128,8 @@ function SuccessPageContent() {
           >
             <CheckCircle2 className="h-12 w-12 text-green-500" />
           </motion.div>
-          <h1 className="text-3xl font-bold">Payment Successful!</h1>
-          <p className="mt-2 text-muted-foreground">
-            Your order has been received and will be processed soon.
-          </p>
+          <h1 className="text-3xl font-bold">{t("title")}</h1>
+          <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
         </div>
 
         {/* Order Summary Card */}
@@ -140,7 +139,7 @@ function SuccessPageContent() {
               {/* Order ID */}
               {orderDetails?.orderId && (
                 <div className="flex items-center justify-between border-b border-border pb-4">
-                  <span className="text-sm font-medium">Order ID</span>
+                  <span className="text-sm font-medium">{t("orderId")}</span>
                   <Badge variant="secondary" className="font-mono">
                     {orderDetails.orderId}
                   </Badge>
@@ -153,7 +152,7 @@ function SuccessPageContent() {
                   <Mail className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium">Confirmation sent to</p>
+                  <p className="text-sm font-medium">{t("confirmationSent")}</p>
                   <p className="text-sm text-muted-foreground">{orderDetails?.email}</p>
                 </div>
               </div>
@@ -164,12 +163,12 @@ function SuccessPageContent() {
                   <Clock className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium">Expected Delivery</p>
+                  <p className="text-sm font-medium">{t("expectedDelivery")}</p>
                   <p className="text-sm text-muted-foreground">
-                    {deliveryTime} hours from payment confirmation
+                    {deliveryTime} {t("deliveryNote")}
                     {orderDetails?.isExpress && (
                       <Badge className="ml-2" variant="default">
-                        Express
+                        {t("express")}
                       </Badge>
                     )}
                   </p>
@@ -178,7 +177,7 @@ function SuccessPageContent() {
 
               {/* Total Amount */}
               <div className="flex items-center justify-between border-t border-border pt-4">
-                <span className="font-medium">Total Paid</span>
+                <span className="font-medium">{t("totalPaid")}</span>
                 <span className="text-xl font-bold text-primary">
                   €{orderDetails?.totalPrice}
                 </span>
@@ -190,37 +189,31 @@ function SuccessPageContent() {
         {/* What's Next */}
         <Card className="mb-6 border-primary/20 bg-primary/5">
           <CardContent className="pt-6">
-            <h2 className="mb-4 font-semibold">What happens next?</h2>
+            <h2 className="mb-4 font-semibold">{t("whatsNext")}</h2>
             <div className="space-y-3">
               <div className="flex gap-3">
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   1
                 </div>
-                <p className="text-sm">
-                  You&apos;ll receive a confirmation email with your order details and timeline.
-                </p>
+                <p className="text-sm">{t("step1")}</p>
               </div>
               <div className="flex gap-3">
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   2
                 </div>
-                <p className="text-sm">
-                  Our design team will start working on your project immediately.
-                </p>
+                <p className="text-sm">{t("step2")}</p>
               </div>
               <div className="flex gap-3">
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   3
                 </div>
-                <p className="text-sm">
-                  You&apos;ll receive the first draft within {deliveryTime} hours via email.
-                </p>
+                <p className="text-sm">{t("step3", { hours: deliveryTime })}</p>
               </div>
               <div className="flex gap-3">
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   4
                 </div>
-                <p className="text-sm">2 rounds of minor revisions are included in your order.</p>
+                <p className="text-sm">{t("step4")}</p>
               </div>
             </div>
           </CardContent>
@@ -229,18 +222,18 @@ function SuccessPageContent() {
         {/* Action Buttons */}
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button className="flex-1" onClick={() => router.push("/dashboard")}>
-            View Order Status
+            {t("viewOrderStatus")}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           <Button variant="outline" onClick={() => router.push("/")}>
             <Home className="mr-2 h-4 w-4" />
-            Back to Home
+            {t("backToHome")}
           </Button>
         </div>
 
         {/* Support Info */}
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          Need help? Contact us at{" "}
+          {t("needHelp")}{" "}
           <a href="mailto:support@infinity.com" className="font-medium text-primary hover:underline">
             support@infinity.com
           </a>
@@ -251,13 +244,15 @@ function SuccessPageContent() {
 }
 
 export default function SuccessPage() {
+  const t = useTranslations("orderSuccess");
+
   return (
     <Suspense
       fallback={
         <Container className="flex min-h-screen items-center justify-center py-20">
           <div className="flex flex-col items-center gap-4">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            <p className="text-muted-foreground">Loading...</p>
+            <p className="text-muted-foreground">{t("loadingGeneric")}</p>
           </div>
         </Container>
       }

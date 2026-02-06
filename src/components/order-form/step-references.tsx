@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Link2, Plus, X, Upload, ArrowRight, ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,8 @@ import { FileUpload } from "./file-upload";
 
 export function StepReferences() {
   const { formData, updateFormData, nextStep, prevStep } = useOrderStore();
+  const t = useTranslations("orderForm.step3");
+  const tCommon = useTranslations("common");
   const [referenceLinks, setReferenceLinks] = useState<string[]>(
     formData.referenceLinks || []
   );
@@ -33,7 +36,7 @@ export function StepReferences() {
     setLinkError(null);
 
     if (!newLink.trim()) {
-      setLinkError("Please enter a URL");
+      setLinkError(t("errors.enterUrl"));
       return;
     }
 
@@ -44,23 +47,23 @@ export function StepReferences() {
     }
 
     if (!validateUrl(urlToAdd)) {
-      setLinkError("Please enter a valid URL");
+      setLinkError(t("errors.invalidUrl"));
       return;
     }
 
     if (referenceLinks.includes(urlToAdd)) {
-      setLinkError("This URL has already been added");
+      setLinkError(t("errors.duplicateUrl"));
       return;
     }
 
     if (referenceLinks.length >= 10) {
-      setLinkError("Maximum 10 reference links allowed");
+      setLinkError(t("errors.maxLinks"));
       return;
     }
 
     setReferenceLinks([...referenceLinks, urlToAdd]);
     setNewLink("");
-  }, [newLink, referenceLinks]);
+  }, [newLink, referenceLinks, t]);
 
   const removeLink = useCallback(
     (index: number) => {
@@ -99,9 +102,9 @@ export function StepReferences() {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-6">
-        <h2 className="text-xl font-semibold">Visual References</h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Share inspiration and brand assets to help us understand your vision.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -110,12 +113,11 @@ export function StepReferences() {
         <div className="space-y-4">
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Link2 className="h-4 w-4 text-primary" />
-            Reference Links
-            <span className="text-xs text-muted-foreground">(optional)</span>
+            {t("linksLabel")}
+            <span className="text-xs text-muted-foreground">({tCommon("optional")})</span>
           </label>
           <p className="text-xs text-muted-foreground">
-            Add links to Pinterest boards, Behance projects, Dribbble shots, or
-            any design inspiration.
+            {t("linksHint")}
           </p>
 
           {/* Add Link Input */}
@@ -128,7 +130,7 @@ export function StepReferences() {
                 setLinkError(null);
               }}
               onKeyDown={handleKeyDown}
-              placeholder="https://pinterest.com/pin/..."
+              placeholder={t("linksPlaceholder")}
               className="flex-1"
             />
             <Button
@@ -138,7 +140,7 @@ export function StepReferences() {
               className="shrink-0"
             >
               <Plus className="h-4 w-4" />
-              <span className="sr-only md:not-sr-only md:ml-2">Add</span>
+              <span className="sr-only md:not-sr-only md:ml-2">{tCommon("add")}</span>
             </Button>
           </div>
 
@@ -200,7 +202,7 @@ export function StepReferences() {
                       className="h-8 w-8 shrink-0 text-muted-foreground hover:text-destructive"
                     >
                       <X className="h-4 w-4" />
-                      <span className="sr-only">Remove link</span>
+                      <span className="sr-only">{tCommon("remove")}</span>
                     </Button>
                   </motion.div>
                 ))}
@@ -213,11 +215,11 @@ export function StepReferences() {
         <div className="space-y-4">
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Upload className="h-4 w-4 text-primary" />
-            Upload Files
-            <span className="text-xs text-muted-foreground">(optional)</span>
+            {t("uploadLabel")}
+            <span className="text-xs text-muted-foreground">({tCommon("optional")})</span>
           </label>
           <p className="text-xs text-muted-foreground">
-            Upload logos, brand guidelines, photos, or any assets we should use.
+            {t("uploadHint")}
           </p>
 
           <FileUpload
@@ -231,11 +233,9 @@ export function StepReferences() {
         <div className="rounded-lg border border-border bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
             <span className="font-medium text-foreground">
-              This step is optional.
+              {t("optionalNotice")}
             </span>{" "}
-            If you don&apos;t have references or files, you can proceed to the
-            next step. However, providing references helps us deliver designs
-            that match your expectations.
+            {t("optionalNoticeText")}
           </p>
         </div>
       </div>
@@ -244,10 +244,10 @@ export function StepReferences() {
       <div className="mt-8 flex justify-between">
         <Button type="button" variant="outline" onClick={prevStep}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {tCommon("back")}
         </Button>
         <Button type="submit" size="lg" className="min-w-[140px]">
-          Continue
+          {tCommon("continue")}
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>

@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { FileText, Ruler, ArrowRight, ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,8 @@ import { DIMENSION_PRESETS } from "@/lib/constants";
 
 export function StepContent() {
   const { formData, updateFormData, nextStep, prevStep } = useOrderStore();
+  const t = useTranslations("orderForm.step2");
+  const tCommon = useTranslations("common");
 
   const {
     register,
@@ -62,9 +65,9 @@ export function StepContent() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-6">
-        <h2 className="text-xl font-semibold">Content Details</h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Tell us what you need. The more detail, the better the result.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -73,12 +76,12 @@ export function StepContent() {
         <div className="space-y-3">
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <FileText className="h-4 w-4 text-primary" />
-            Project Description
-            <span className="text-destructive">*</span>
+            {t("descriptionLabel")}
+            <span className="text-destructive">{tCommon("required")}</span>
           </label>
           <Textarea
             {...register("contentText")}
-            placeholder="Describe your project in detail. Include any text that should appear in the design, key messages, target audience, style preferences, and any other relevant information..."
+            placeholder={t("descriptionPlaceholder")}
             className="min-h-[180px] resize-none"
           />
           <div className="flex items-center justify-between">
@@ -88,8 +91,7 @@ export function StepContent() {
               </p>
             ) : (
               <p className="text-xs text-muted-foreground">
-                Minimum 10 characters. Be as specific as possible to avoid
-                revisions.
+                {t("descriptionHint")}
               </p>
             )}
             <p className="text-xs text-muted-foreground">
@@ -102,13 +104,13 @@ export function StepContent() {
         <div className="space-y-3">
           <label className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Ruler className="h-4 w-4 text-primary" />
-            Dimensions / Format
-            <span className="text-xs text-muted-foreground">(optional)</span>
+            {t("dimensionsLabel")}
+            <span className="text-xs text-muted-foreground">({tCommon("optional")})</span>
           </label>
 
           <Select onValueChange={handleDimensionPreset}>
             <SelectTrigger>
-              <SelectValue placeholder="Select a preset or enter custom" />
+              <SelectValue placeholder={t("dimensionsPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
               {DIMENSION_PRESETS.map((preset) => (
@@ -128,14 +130,14 @@ export function StepContent() {
             >
               <Input
                 {...register("dimensions")}
-                placeholder="Enter custom dimensions (e.g., 800x600, A4, etc.)"
+                placeholder={t("dimensionsCustomPlaceholder")}
               />
             </motion.div>
           )}
 
           {!isCustomDimension && selectedDimension && (
             <p className="text-xs text-muted-foreground">
-              Selected: {selectedDimension}
+              {t("selected")}: {selectedDimension}
             </p>
           )}
         </div>
@@ -149,7 +151,7 @@ export function StepContent() {
           onClick={prevStep}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {tCommon("back")}
         </Button>
         <Button
           type="submit"
@@ -157,7 +159,7 @@ export function StepContent() {
           disabled={!isValid}
           className="min-w-[140px]"
         >
-          Continue
+          {tCommon("continue")}
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>

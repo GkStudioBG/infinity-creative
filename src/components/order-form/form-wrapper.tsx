@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowLeft, XCircle, Loader2 } from "lucide-react";
 import { useOrderStore } from "@/hooks/use-order-store";
 import { StepIndicator } from "./step-indicator";
@@ -17,18 +18,19 @@ import { slideLeft, slideRight } from "@/lib/animations";
 
 const TOTAL_STEPS = 5;
 
-const STEP_TITLES = [
-  "Project Type",
-  "Content Details",
-  "Visual References",
-  "Additional Options",
-  "Summary & Payment",
-];
-
 function FormWrapperContent() {
   const { currentStep, prevStep: goToPrevStep, getDirection } = useOrderStore();
   const searchParams = useSearchParams();
+  const t = useTranslations("orderForm");
   const [showCancelNotice, setShowCancelNotice] = useState(false);
+
+  const stepTitles = [
+    t("stepTitles.projectType"),
+    t("stepTitles.contentDetails"),
+    t("stepTitles.visualReferences"),
+    t("stepTitles.additionalOptions"),
+    t("stepTitles.summaryPayment"),
+  ];
 
   const direction = getDirection();
   const variants = direction === "forward" ? slideLeft : slideRight;
@@ -68,10 +70,10 @@ function FormWrapperContent() {
       <Container className="max-w-3xl">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Place Your Order
+            {t("pageTitle")}
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Tell us about your project and we&apos;ll deliver within 48 hours
+            {t("pageSubtitle")}
           </p>
         </div>
 
@@ -86,9 +88,9 @@ function FormWrapperContent() {
             >
               <XCircle className="h-5 w-5 text-yellow-500" />
               <div className="flex-1">
-                <p className="text-sm font-medium">Payment Canceled</p>
+                <p className="text-sm font-medium">{t("paymentCanceled")}</p>
                 <p className="text-xs text-muted-foreground">
-                  Your order is still here. Continue when you&apos;re ready.
+                  {t("paymentCanceledMessage")}
                 </p>
               </div>
               <Button
@@ -106,7 +108,7 @@ function FormWrapperContent() {
         <StepIndicator
           currentStep={currentStep}
           totalSteps={TOTAL_STEPS}
-          stepTitles={STEP_TITLES}
+          stepTitles={stepTitles}
         />
 
         <div className="mt-8 overflow-hidden rounded-lg border bg-card p-6 shadow-sm md:p-8">
@@ -136,7 +138,7 @@ function FormWrapperContent() {
               className="text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to {STEP_TITLES[currentStep - 2]}
+              {t("backTo")} {stepTitles[currentStep - 2]}
             </Button>
           </motion.div>
         )}
@@ -145,18 +147,22 @@ function FormWrapperContent() {
   );
 }
 
+function FormWrapperFallback() {
+  const t = useTranslations("orderForm");
+
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="text-muted-foreground">{t("loadingForm")}</p>
+      </div>
+    </div>
+  );
+}
+
 export function FormWrapper() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            <p className="text-muted-foreground">Loading form...</p>
-          </div>
-        </div>
-      }
-    >
+    <Suspense fallback={<FormWrapperFallback />}>
       <FormWrapperContent />
     </Suspense>
   );

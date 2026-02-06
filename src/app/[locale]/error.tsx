@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 export default function Error({
@@ -10,6 +11,9 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("error");
+  const tCommon = useTranslations("common");
+
   useEffect(() => {
     console.error("Application error:", error);
   }, [error]);
@@ -35,24 +39,21 @@ export default function Error({
           </div>
         </div>
 
-        <h2 className="mb-2 text-2xl font-bold">Something went wrong</h2>
-        <p className="mb-6 text-muted-foreground">
-          We apologize for the inconvenience. An error occurred while processing
-          your request.
-        </p>
+        <h2 className="mb-2 text-2xl font-bold">{t("title")}</h2>
+        <p className="mb-6 text-muted-foreground">{t("subtitle")}</p>
 
         {error.digest && (
           <p className="mb-6 text-xs text-muted-foreground">
-            Error ID: {error.digest}
+            {t("errorId")} {error.digest}
           </p>
         )}
 
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
           <Button onClick={reset} variant="default">
-            Try again
+            {tCommon("tryAgain")}
           </Button>
           <Button onClick={() => (window.location.href = "/")} variant="outline">
-            Go home
+            {tCommon("goHome")}
           </Button>
         </div>
       </div>

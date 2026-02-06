@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { AlertCircle, Clock, RefreshCw, FileText, Shield } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import {
@@ -11,34 +12,32 @@ import {
 } from "@/lib/animations";
 import { PRICING, REVISIONS_INCLUDED } from "@/lib/constants";
 
-const rules = [
-  {
-    icon: Clock,
-    title: "Timer Starts After Payment",
-    description:
-      "Your delivery countdown begins immediately after successful payment. No delays, no waiting for confirmation calls.",
-  },
-  {
-    icon: RefreshCw,
-    title: `${REVISIONS_INCLUDED} Revisions Included`,
-    description:
-      "Every order includes 2 rounds of minor revisions. Feedback must be clear and consolidated in one message.",
-  },
-  {
-    icon: FileText,
-    title: "No Scope Changes",
-    description:
-      "Changes to the original brief after work has started are treated as new requests and billed separately.",
-  },
-  {
-    icon: Shield,
-    title: "Clear Communication",
-    description:
-      "We deliver what you describe. The more detailed your brief, the better the result. No mind-reading required.",
-  },
-];
-
 export function Rules() {
+  const t = useTranslations("rules");
+
+  const rules = [
+    {
+      icon: Clock,
+      titleKey: "rule1Title",
+      descriptionKey: "rule1Description",
+    },
+    {
+      icon: RefreshCw,
+      titleKey: "rule2Title",
+      descriptionKey: "rule2Description",
+    },
+    {
+      icon: FileText,
+      titleKey: "rule3Title",
+      descriptionKey: "rule3Description",
+    },
+    {
+      icon: Shield,
+      titleKey: "rule4Title",
+      descriptionKey: "rule4Description",
+    },
+  ];
+
   return (
     <section id="rules" className="bg-card/30 py-20 sm:py-28">
       <Container>
@@ -52,14 +51,13 @@ export function Rules() {
           <motion.div variants={fadeIn} className="mb-12 text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-4 py-2 text-sm text-yellow-500">
               <AlertCircle className="h-4 w-4" />
-              Important: Please Read
+              {t("importantBadge")}
             </div>
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              The Rules
+              {t("title")}
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Clear expectations lead to great results. Here&apos;s how we keep
-              prices low and delivery fast.
+              {t("subtitle")}
             </p>
           </motion.div>
 
@@ -67,7 +65,7 @@ export function Rules() {
           <div className="mb-12 grid gap-6 md:grid-cols-2">
             {rules.map((rule, index) => (
               <motion.div
-                key={rule.title}
+                key={rule.titleKey}
                 variants={cardEntrance}
                 custom={index}
                 className="flex gap-4 rounded-lg border border-border/60 bg-card p-6"
@@ -76,9 +74,9 @@ export function Rules() {
                   <rule.icon className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="mb-2 font-semibold">{rule.title}</h3>
+                  <h3 className="mb-2 font-semibold">{t(rule.titleKey)}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {rule.description}
+                    {t(rule.descriptionKey)}
                   </p>
                 </div>
               </motion.div>
@@ -88,32 +86,25 @@ export function Rules() {
           {/* Policy statement */}
           <motion.div variants={fadeIn}>
             <div className="mx-auto max-w-3xl rounded-lg border border-border/60 bg-background p-6 sm:p-8">
-              <h3 className="mb-4 text-lg font-semibold">Our Policy</h3>
+              <h3 className="mb-4 text-lg font-semibold">{t("policyTitle")}</h3>
               <div className="space-y-4 text-sm text-muted-foreground">
+                <p>{t("policyText1")}</p>
                 <p>
-                  We value your time and our own. To maintain competitive prices
-                  and fast delivery, we operate on a fixed process.
-                </p>
-                <p>
-                  Every order includes{" "}
+                  {t("policyText2")}{" "}
                   <span className="font-medium text-foreground">
-                    {REVISIONS_INCLUDED} rounds of minor revisions
+                    {t("policyText2Highlight")}
                   </span>
-                  . Revisions must address small adjustments (color tweaks, text
-                  changes, minor repositioning) — not fundamental redesigns.
+                  {t("policyText2End")}
                 </p>
                 <p>
-                  Changes to the brief after work has started, or additional
-                  revision rounds beyond the included{" "}
-                  {REVISIONS_INCLUDED}, are billed at{" "}
+                  {t("policyText3")}{" "}
                   <span className="font-medium text-foreground">
                     €{PRICING.additionalRevisionRate}/hour
                   </span>
                   .
                 </p>
                 <p className="border-t border-border/60 pt-4 text-xs">
-                  By placing an order, you agree to these terms. Questions?
-                  Email us before ordering.
+                  {t("policyText4")}
                 </p>
               </div>
             </div>

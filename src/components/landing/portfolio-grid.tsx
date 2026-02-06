@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ExternalLink, Palette, Image as ImageIcon, Type, Printer, Sparkles } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
@@ -19,12 +20,20 @@ interface PortfolioItem {
   placeholder: boolean;
 }
 
-const typeConfig: Record<ProjectType, { label: string; icon: typeof Palette; color: string }> = {
-  logo: { label: "Logo", icon: Sparkles, color: "bg-blue-500/10 text-blue-500" },
-  banner: { label: "Banner", icon: ImageIcon, color: "bg-purple-500/10 text-purple-500" },
-  social: { label: "Social Media", icon: ExternalLink, color: "bg-pink-500/10 text-pink-500" },
-  print: { label: "Print", icon: Printer, color: "bg-orange-500/10 text-orange-500" },
-  branding: { label: "Branding", icon: Type, color: "bg-green-500/10 text-green-500" },
+const typeIcons: Record<ProjectType, typeof Palette> = {
+  logo: Sparkles,
+  banner: ImageIcon,
+  social: ExternalLink,
+  print: Printer,
+  branding: Type,
+};
+
+const typeColors: Record<ProjectType, string> = {
+  logo: "bg-blue-500/10 text-blue-500",
+  banner: "bg-purple-500/10 text-purple-500",
+  social: "bg-pink-500/10 text-pink-500",
+  print: "bg-orange-500/10 text-orange-500",
+  branding: "bg-green-500/10 text-green-500",
 };
 
 const portfolioItems: PortfolioItem[] = [
@@ -39,10 +48,12 @@ const portfolioItems: PortfolioItem[] = [
 ];
 
 function PortfolioCard({ item, index }: { item: PortfolioItem; index: number }) {
+  const t = useTranslations("portfolio.types");
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const config = typeConfig[item.type];
-  const Icon = config.icon;
+  const Icon = typeIcons[item.type];
+  const color = typeColors[item.type];
+  const label = t(item.type);
 
   return (
     <motion.div
@@ -87,9 +98,9 @@ function PortfolioCard({ item, index }: { item: PortfolioItem; index: number }) 
       {/* Card content */}
       <div className="p-4">
         <div className="mb-2 flex items-center gap-2">
-          <Badge variant="secondary" className={cn("text-xs", config.color)}>
+          <Badge variant="secondary" className={cn("text-xs", color)}>
             <Icon className="mr-1 h-3 w-3" />
-            {config.label}
+            {label}
           </Badge>
         </div>
         <h3 className="text-sm font-medium text-foreground transition-colors group-hover:text-primary">
@@ -101,6 +112,8 @@ function PortfolioCard({ item, index }: { item: PortfolioItem; index: number }) 
 }
 
 export function PortfolioGrid() {
+  const t = useTranslations("portfolio");
+
   return (
     <section id="portfolio" className="py-20 sm:py-28">
       <Container>
@@ -113,11 +126,10 @@ export function PortfolioGrid() {
           {/* Section header */}
           <motion.div variants={fadeIn} className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              Recent <span className="text-primary">Work</span>
+              {t("title")} <span className="text-primary">{t("titleHighlight")}</span>
             </h2>
             <p className="mx-auto max-w-2xl text-muted-foreground">
-              A selection of designs delivered to satisfied clients. Same quality,
-              same speed, every time.
+              {t("subtitle")}
             </p>
           </motion.div>
 
