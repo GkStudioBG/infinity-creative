@@ -1,7 +1,7 @@
 // Pricing configuration
 export const PRICING = {
-  singleDesign: 49,
-  packOfFive: 199,
+  singleDesign: 25,
+  packOfFive: 99,
   expressFee: 30,
   sourceFilesFee: 20,
   additionalRevisionRate: 20, // per hour
