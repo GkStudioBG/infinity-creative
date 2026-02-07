@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npm run pages:build && wrangler pages deploy",
-    "pages:dev": "npx @cloudflare/next-on-pages --dev"
+    "cf:build": "npx @opennextjs/cloudflare build",
+    "cf:deploy": "npm run cf:build && wrangler pages deploy .open-next/assets --project-name=infinity-creative",
+    "cf:dev": "wrangler pages dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

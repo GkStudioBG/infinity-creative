@@ -46,3 +46,7 @@ coverage/
 # Cloudflare
 .wrangler/
 wrangler.toml.local
+.open-next/
+
+# Windows
+nul
