@@ -37,7 +37,8 @@
       "Bash(gh:*)",
       "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" remote set-url:*)",
       "Bash(git -C:*)",
-      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\ZenflowProjects\\\\designsaas\" push -u origin main)"
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\ZenflowProjects\\\\designsaas\" push -u origin main)",
+      "WebFetch(domain:infinity-creative-2el.pages.dev)"
     ]
   }
 }

@@ -4,8 +4,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Note: Static export disabled for API routes
-  // Will need to migrate to Supabase Edge Functions for Cloudflare Pages deployment
+  output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
