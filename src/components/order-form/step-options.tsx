@@ -28,15 +28,15 @@ export function StepOptions() {
   } = useForm<Step4Data>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      isExpress: formData.isExpress,
-      includeSourceFiles: formData.includeSourceFiles,
-      email: formData.email,
+      isExpress: formData.isExpress ?? false,
+      includeSourceFiles: formData.includeSourceFiles ?? false,
+      email: formData.email ?? "",
     },
     mode: "onChange",
   });
 
-  const isExpress = watch("isExpress");
-  const includeSourceFiles = watch("includeSourceFiles");
+  const isExpress = watch("isExpress") ?? false;
+  const includeSourceFiles = watch("includeSourceFiles") ?? false;
 
   const onSubmit = (data: Step4Data) => {
     updateFormData(data);
