@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(timeout:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(ping:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInternationalization \\(i18n\\) with next-intl\n\n- Add English and Bulgarian language support\n- Create [locale] routing structure\n- Add language switcher in header\n- Localize all components and pages\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npx wrangler pages deploy:*)",
+      "Bash(npx @cloudflare/next-on-pages@1:*)",
+      "Bash(npx wrangler:*)",
+      "Bash(npx vercel build:*)",
+      "Bash(npm view:*)",
+      "Bash(findstr:*)",
+      "Bash(npx opennextjs-cloudflare build:*)",
+      "Bash(gh auth:*)",
+      "Bash(where:*)",
+      "Bash(dir:*)",
+      "Bash(npx opennextjs-cloudflare:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd OpenNext Cloudflare deployment configuration\n\n- Configure OpenNext for Cloudflare Pages\n- Update wrangler.toml with pages_build_output_dir\n- Add open-next.config.ts\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(winget install:*)",
+      "Bash(\"C:/Program Files/GitHub CLI/gh.exe\" auth status)",
+      "Bash(\"C:/Program Files/GitHub CLI/gh.exe\" auth login --web --git-protocol https)",
+      "Bash(git config:*)",
+      "Bash(git push:*)",
+      "Bash(cd:*)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" remote -v)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" status --short)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" add package.json .gitignore)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" commit -m \"$\\(cat <<''EOF''\nUpdate Cloudflare deployment scripts for OpenNext\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" branch -a)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" checkout main)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" merge new-task-3674 --no-edit)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" push -u origin new-task-3674)",
+      "Bash(gh:*)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\Desktop\\\\designsaas\" remote set-url:*)",
+      "Bash(git -C:*)",
+      "Bash(git -C \"C:\\\\Users\\\\nibel\\\\ZenflowProjects\\\\designsaas\" push -u origin main)"
+    ]
+  }
+}

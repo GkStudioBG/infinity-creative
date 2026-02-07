@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import {
   ArrowLeft,
   CreditCard,
@@ -304,13 +305,13 @@ export function StepSummary() {
           <div className="flex-1">
             <p className="text-sm">
               {t("termsAccept")}{" "}
-              <a
+              <Link
                 href="/terms"
                 onClick={(e) => e.stopPropagation()}
                 className="font-medium text-primary hover:underline"
               >
                 {t("termsLink")}
-              </a>{" "}
+              </Link>{" "}
               {t("termsEnd")}
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
