@@ -17,6 +17,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/layout";
 import { DELIVERY_TIMES } from "@/lib/constants";
 
@@ -247,17 +249,21 @@ export default function SuccessPage() {
   const t = useTranslations("orderSuccess");
 
   return (
-    <Suspense
-      fallback={
-        <Container className="flex min-h-screen items-center justify-center py-20">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            <p className="text-muted-foreground">{t("loadingGeneric")}</p>
-          </div>
-        </Container>
-      }
-    >
-      <SuccessPageContent />
-    </Suspense>
+    <>
+      <Header />
+      <Suspense
+        fallback={
+          <Container className="flex min-h-screen items-center justify-center py-20">
+            <div className="flex flex-col items-center gap-4">
+              <Loader2 className="h-12 w-12 animate-spin text-primary" />
+              <p className="text-muted-foreground">{t("loadingGeneric")}</p>
+            </div>
+          </Container>
+        }
+      >
+        <SuccessPageContent />
+      </Suspense>
+      <Footer />
+    </>
   );
 }

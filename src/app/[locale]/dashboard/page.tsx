@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,8 +65,10 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-12">
-      <Container>
+    <>
+      <Header />
+      <div className="min-h-screen bg-background py-12">
+        <Container>
         <div className="mx-auto max-w-4xl space-y-8">
           {/* Header */}
           <div className="text-center">
@@ -171,6 +175,8 @@ export default function DashboardPage() {
           )}
         </div>
       </Container>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }

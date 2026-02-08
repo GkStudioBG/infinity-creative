@@ -1,4 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { FormWrapper } from "@/components/order-form";
 
 type Props = {
@@ -19,5 +21,11 @@ export default async function OrderPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <FormWrapper />;
+  return (
+    <>
+      <Header />
+      <FormWrapper />
+      <Footer />
+    </>
+  );
 }
